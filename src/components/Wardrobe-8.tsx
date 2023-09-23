@@ -8,9 +8,10 @@ Title: Wardrobe (Low poly)
 */
 
 import * as THREE from 'three'
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
+import { DimensionContext } from '../contexts/DimensionContext'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -31,15 +32,43 @@ type GLTFResult = GLTF & {
 type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function Wardrobe8(props: JSX.IntrinsicElements['group']) {
+ const {dimensions} = useContext(DimensionContext)
   const { nodes, materials } = useGLTF('/wardrobe-8.glb') as GLTFResult
+  // console.log(materials.Main)
+  const {x,y,z} = dimensions
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes.Object_4.geometry} material={materials.Main} />
-      <mesh geometry={nodes.Object_6.geometry} material={materials.Main} />
-      <mesh geometry={nodes.Object_8.geometry} material={materials.silver} />
-      <mesh geometry={nodes.Object_10.geometry} material={materials.silver} />
-      <mesh geometry={nodes.Object_12.geometry} material={materials.silver} />
-      <mesh geometry={nodes.Object_14.geometry} material={materials.silver} />
+      <mesh 
+       name="main-body" 
+       geometry={nodes.Object_4.geometry} 
+       scale={[
+        x ,
+        y ,
+        z 
+       ]} >
+        <meshStandardMaterial
+        {...materials.Main}
+        />
+      </mesh>
+      <mesh 
+       name="leftdoor" scale={[
+       (x/2) ,
+        y ,
+        z 
+       ]} 
+        position={[-x/2.8,0,0]} rotation={[0,0,0]} geometry={nodes.Object_6.geometry}  material={materials.Main} />  
+      <mesh 
+       name="rightdoor" scale={[
+        (x/2) ,
+        y ,
+        z 
+       ]} 
+        position={[x/2.8,0,0]} rotation={[0,0,0]} geometry={nodes.Object_6.geometry}  material={materials.Main} />
+     
+      <mesh name="handle-1" scale={[x,y,z]} geometry={nodes.Object_8.geometry} material={materials.silver} />
+      <mesh name="handle-2" scale={[x,y,z]} geometry={nodes.Object_10.geometry} material={materials.silver} />
+      <mesh name="stand-1" scale={[x,y,z]}  geometry={nodes.Object_12.geometry} material={materials.silver} />
+      <mesh name="stand-2" scale={[x,y,z]} geometry={nodes.Object_14.geometry} material={materials.silver} />
       <mesh geometry={nodes.Object_16.geometry} material={materials.silver} />
     </group>
   )

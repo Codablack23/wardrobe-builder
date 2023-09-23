@@ -213,32 +213,32 @@ export function Wardrobe7(props: JSX.IntrinsicElements['group']) {
             <group name="Object_2">
               <group name="RootNode">
                 <group name="Group009" position={[1530, 1299, 1099]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
-                  <group name="Box002" position={[-468.725, -190.5, 20]} rotation={[Math.PI / 2, 0, 0]}>
+                  {/* <group name="Box002 extension-door-1" position={[-468.725, -190.5, 20]} rotation={[Math.PI / 2, 0, 0]}>
                     <group name="Object_120" position={[232.225, 0, -9.5]}>
                       <mesh name="Box002_NCS_S2002-Y50R_semiglos_0" geometry={nodes['Box002_NCS_S2002-Y50R_semiglos_0'].geometry} material={materials['NCS_S2002-Y50R_semiglos']} />
                     </group>
-                  </group>
-                  <group name="Box003" position={[470.175, -190.5, 20]} rotation={[Math.PI / 2, 0, 0]}>
+                  </group> */}
+                  {/* <group name="Box003 extension-door-2" position={[470.175, -190.5, 20]} rotation={[Math.PI / 2, 0, 0]}>
                     <group name="Object_123" position={[-225.675, 0, -9.5]}>
                       <mesh name="Box003_NCS_S2002-Y50R_semiglos_0" geometry={nodes['Box003_NCS_S2002-Y50R_semiglos_0'].geometry} material={materials['NCS_S2002-Y50R_semiglos']} />
                     </group>
-                  </group>
+                  </group> */}
                   <group name="Group003" position={[211.5, 23, -887]}>
-                    <group name="VIFS072" position={[190.5, 8, -9]} rotation={[Math.PI / 2, 1.571, 0]}>
+                    {/* <group name="VIFS072" position={[190.5, 8, -9]} rotation={[Math.PI / 2, 1.571, 0]}>
                       <group name="Object_127" position={[169, -1075, -8]}>
                         <mesh name="VIFS072_U702_ST9_��������������_����������_0" geometry={nodes['VIFS072_U702_ST9_��������������_����������_0'].geometry} material={materials.U702_ST9} />
                       </group>
-                    </group>
-                    <group name="VIFS077" position={[0, 8, -66]}>
+                    </group> */}
+                    {/* <group name="VIFS077" position={[0, 8, -66]}>
                       <group name="Object_130" position={[288.5, -231, -8]}>
                         <mesh name="VIFS077_U702_ST9_��������������_����������_0" geometry={nodes['VIFS077_U702_ST9_��������������_����������_0'].geometry} material={materials.U702_ST9} />
                       </group>
-                    </group>
-                    <group name="VIFS074" position={[0, 125, 5]} rotation={[Math.PI / 2, 0, 0]}>
+                    </group> */}
+                    {/* <group name="VIFS074" position={[0, 125, 5]} rotation={[Math.PI / 2, 0, 0]}>
                       <group name="Object_133" position={[288.5, -1089, -8]}>
                         <mesh name="VIFS074_U702_ST9_��������������_����������_0" geometry={nodes['VIFS074_U702_ST9_��������������_����������_0'].geometry} material={materials.U702_ST9} />
                       </group>
-                    </group>
+                    </group> */}
                     <group name="VIFS076" position={[0, -125, 0]} rotation={[Math.PI / 2, 0, 0]}>
                       <group name="Object_139" position={[288.5, -1084, -8]}>
                         <mesh name="VIFS076_U702_ST9_��������������_����������_0" geometry={nodes['VIFS076_U702_ST9_��������������_����������_0'].geometry} material={materials.U702_ST9} />

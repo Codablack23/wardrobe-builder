@@ -32,17 +32,17 @@ export function Wardrobe4(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/wardrobe-4.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <group position={[-4.505, 62.459, 0]}>
-        <mesh geometry={nodes['Box001_14_-_Polished_Aluminum_0'].geometry} material={materials['14_-_Polished_Aluminum']} />
-        <mesh geometry={nodes['Box001_15_-_Glossy_Plastic_0'].geometry} material={materials['15_-_Glossy_Plastic']} />
+      <group name="whole-body" position={[-4.505, 62.459, 0]}>
+        <mesh name="body-box" geometry={nodes['Box001_14_-_Polished_Aluminum_0'].geometry} material={materials['14_-_Polished_Aluminum']} />
+        <mesh name="shelves" geometry={nodes['Box001_15_-_Glossy_Plastic_0'].geometry} material={materials['15_-_Glossy_Plastic']} />
       </group>
-      <group position={[-52.377, 36.749, 35.999]}>
+      <group name="first-drawer" position={[-52.377, 36.749, 35.999]}>
         <mesh geometry={nodes['Object001_14_-_Polished_Aluminum_0'].geometry} material={materials['14_-_Polished_Aluminum']} position={[47.873, 25.659, -50.538]} />
       </group>
-      <group position={[-52.348, 21.006, 37.72]}>
+      <group name="third-drawer" position={[-52.348, 21.006, 37.72]}>
         <mesh geometry={nodes['Object003_14_-_Polished_Aluminum_0'].geometry} material={materials['14_-_Polished_Aluminum']} position={[47.844, 9.915, -52.193]} />
       </group>
-      <group position={[-52.377, 21.447, 44.096]}>
+      <group  name="second-drawer" position={[-52.377, 21.447, 44.096]}>
         <mesh geometry={nodes['Object004_14_-_Polished_Aluminum_0'].geometry} material={materials['14_-_Polished_Aluminum']} position={[47.873, 25.659, -50.538]} />
       </group>
     </group>

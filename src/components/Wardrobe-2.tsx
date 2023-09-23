@@ -71,30 +71,30 @@ export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/wardrobe-2.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]}>
-        <mesh geometry={nodes.Cube_0.geometry} material={materials['Material.007']} position={[0, 0, 2.1]} />
-        <mesh geometry={nodes.Cube001_0.geometry} material={materials['Material.011']} position={[0.969, 0, 0]} />
-        <mesh geometry={nodes.Cube002_0.geometry} material={materials['Material.003']} position={[0.964, -1.312, 2.064]} />
-        <mesh geometry={nodes.Cube003_0.geometry} material={materials['Material.002']} position={[0.969, 1.302, 2.051]} />
-        <mesh geometry={nodes.Cube004_0.geometry} material={materials['Material.001']} position={[0.969, 0, 4.119]} />
-        <mesh geometry={nodes.Cube005_0.geometry} material={materials['Material.006']} position={[0.969, 0, 1.026]} />
-        <mesh geometry={nodes.Cube006_0.geometry} material={materials['Material.010']} position={[0.969, 0.011, 0.525]} />
-        <mesh geometry={nodes.Cube007_0.geometry} material={materials['Material.008']} position={[1.949, -0.657, 0.513]} />
-        <mesh geometry={nodes.Cube008_0.geometry} material={materials['Material.009']} position={[1.949, 0.666, 0.513]} />
-        <mesh geometry={nodes.Cube009_0.geometry} material={materials['Material.004']} position={[1.82, -0.643, 2.581]} />
-        <mesh geometry={nodes.Cube010_0.geometry} material={materials['Material.005']} position={[1.82, 0.649, 2.579]} rotation={[Math.PI / 2, 0, 0]} scale={[1, 1.01, 1]} />
-        <mesh geometry={nodes.Cylinder_0.geometry} material={materials['Material.016']} position={[1.96, -0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cylinder001_0.geometry} material={materials['Material.015']} position={[1.96, -0.108, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cylinder002_0.geometry} material={materials['Material.012']} position={[1.96, 0.139, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cylinder003_0.geometry} material={materials['Material.013']} position={[1.96, 0.139, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cylinder004_0.geometry} material={materials['Material.022']} position={[1.96, 0.139, 0.583]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cylinder005_0.geometry} material={materials['Material.023']} position={[1.96, 0.139, 0.443]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cylinder006_0.geometry} material={materials.Spot} position={[1.96, -0.118, 0.443]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cylinder007_0.geometry} material={materials['Material.018']} position={[1.96, -0.118, 0.583]} rotation={[Math.PI / 2, 1.571, 0]} />
-        <mesh geometry={nodes.Cube011_0.geometry} material={materials['Material.014']} position={[2.008, 0.13, 2.606]} />
-        <mesh geometry={nodes.Cube012_0.geometry} material={materials['Material.017']} position={[2.008, -0.101, 2.606]} />
-        <mesh geometry={nodes.Cube013_0.geometry} material={materials['Material.020']} position={[1.993, -0.12, 0.523]} />
-        <mesh geometry={nodes.Cube014_0.geometry} material={materials['Material.021']} position={[1.993, 0.136, 0.523]} />
+      <group rotation={[-Math.PI/2,0, 0]}>
+        <mesh name="back-side" geometry={nodes.Cube_0.geometry} material={materials['Material.007']} position={[0, 0, 2.1]} />
+        <mesh name="bottom-side" geometry={nodes.Cube001_0.geometry} material={materials['Material.011']} position={[0.969, 0, 0]} />
+        <mesh name="left-side" geometry={nodes.Cube002_0.geometry} material={materials['Material.003']} position={[0.964, -1.312, 2.064]} />
+        <mesh name="left-side" geometry={nodes.Cube003_0.geometry} material={materials['Material.002']} position={[0.969, 1.302, 2.051]} />
+        <mesh name="top-view" geometry={nodes.Cube004_0.geometry} material={materials['Material.001']} position={[0.969, 0, 4.119]} />
+        <mesh name="divider-1" geometry={nodes.Cube005_0.geometry} material={materials['Material.006']} position={[0.969, 0, 1.026]} />
+        <mesh name="divider-2" geometry={nodes.Cube006_0.geometry} material={materials['Material.010']} position={[0.969, 0.011, 0.525]} />
+        <mesh name="compartment-door-1" geometry={nodes.Cube007_0.geometry} material={materials['Material.008']} position={[1.949, -0.657, 0.513]} />
+        <mesh name="compartment-door-1" geometry={nodes.Cube008_0.geometry} material={materials['Material.009']} position={[1.949, 0.666, 0.513]} />
+        <mesh name="main-door-1" geometry={nodes.Cube009_0.geometry} material={materials['Material.004']} position={[1.82, -0.643, 2.581]} />
+        <mesh name="main-door-2" geometry={nodes.Cube010_0.geometry} material={materials['Material.005']} position={[1.82, 0.649, 2.579]} rotation={[Math.PI / 2, 0, 0]} scale={[1, 1.01, 1]} />
+        {/* <mesh geometry={nodes.Cylinder_0.geometry} material={materials['Material.016']} position={[1.96, -0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cylinder001_0.geometry} material={materials['Material.015']} position={[1.96, -0.108, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cylinder002_0.geometry} material={materials['Material.012']} position={[1.96, 0.139, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cylinder003_0.geometry} material={materials['Material.013']} position={[1.96, 0.139, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cylinder004_0.geometry} material={materials['Material.022']} position={[1.96, 0.139, 0.583]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cylinder005_0.geometry} material={materials['Material.023']} position={[1.96, 0.139, 0.443]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cylinder006_0.geometry} material={materials.Spot} position={[1.96, -0.118, 0.443]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cylinder007_0.geometry} material={materials['Material.018']} position={[1.96, -0.118, 0.583]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
+        {/* <mesh geometry={nodes.Cube011_0.geometry} material={materials['Material.014']} position={[2.008, 0.13, 2.606]} /> */}
+        {/* <mesh geometry={nodes.Cube012_0.geometry} material={materials['Material.017']} position={[2.008, -0.101, 2.606]} /> */}
+        {/* <mesh geometry={nodes.Cube013_0.geometry} material={materials['Material.020']} position={[1.993, -0.12, 0.523]} /> */}
+        {/* <mesh geometry={nodes.Cube014_0.geometry} material={materials['Material.021']} position={[1.993, 0.136, 0.523]} /> */}
       </group>
     </group>
   )
