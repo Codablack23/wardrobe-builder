@@ -1,10 +1,11 @@
 import { Slider } from "antd"
-import { useContext } from "react"
+import { useContext, useRef } from "react"
 import { DimensionContext } from "../contexts/DimensionContext"
 import { DimensionContextObject } from "../interfaces"
 
 const DimensionFeature = ()=>{
   const {dimensions,setDimension,unit} = useContext(DimensionContext)
+  const ref = useRef<HTMLDivElement>(null)
   const handleSlide=(x:number,y:number,z:number)=>{
       setDimension({x,y,z})
   }
@@ -19,8 +20,9 @@ const DimensionFeature = ()=>{
             <i className="bi bi-chevron-down"></i>       
           </button>
         </header>
-        <div className="bg-white p-2 my-4 rounded-md">
-          <div>
+        <div className="bg-white  my-4 rounded-md" ref={ref}>
+         <div className="p-3">
+         <div>
             <p>Current Width:{dimensions.x * unit.conversion}{unit.name}</p>
             <Slider
              value={(dimensions.x/360) * 100}
@@ -42,6 +44,7 @@ const DimensionFeature = ()=>{
              onChange={(value)=>handleSlide(dimensions.x,dimensions.y,((value*90)/100))}
             />
           </div>
+         </div>
           
         </div>
     </div>
