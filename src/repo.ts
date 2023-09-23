@@ -9,7 +9,7 @@ export const materials:MaterialObject[] = [
     {
        name:"wood_table",
        id:1,
-       src:"/public/materials/wood_table.jpg"
+       src:"/materials/wood_table.jpg"
     },
     {
        name:"kitchen_wood",
@@ -19,6 +19,6 @@ export const materials:MaterialObject[] = [
     {
        name:"laminate_floor",
        id:1,
-       src:"/public/materials/laminate_floor.jpg"
+       src:"/materials/laminate_floor.jpg"
     }
 ]
