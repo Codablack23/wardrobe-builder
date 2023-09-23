@@ -24,7 +24,7 @@ export default function DimensionContextProvider(props:ContextProviderProps){
     })
     const [dimensions,setDimension] = useState({
         x:90,
-        y:230,
+        y:215,
         z:60
     })
  

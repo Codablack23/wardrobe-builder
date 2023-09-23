@@ -1,4 +1,5 @@
 import { Children, ReactNode } from "react"
+import { Texture } from "three"
 
 export type Angles = [x:number,y:number,z:number]
 
@@ -23,4 +24,15 @@ export interface DimensionContextObject{
     unit:Unit,
     setDimension:(newDimension:Dimension)=>void
     setUnit:(newUnit:Unit)=>void
+}
+export interface MaterialObject{
+    name:string,
+    id:number,
+    src:string
+}
+export interface MaterialContextObject{
+    door:MaterialObject,
+    shelf:MaterialObject,
+    body:MaterialObject,
+    [key:string]:MaterialObject
 }

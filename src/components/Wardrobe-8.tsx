@@ -12,6 +12,8 @@ import React, { useContext, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 import { DimensionContext } from '../contexts/DimensionContext'
+import { MaterialContext } from '../contexts/MaterialContext'
+import { useLoader } from '@react-three/fiber'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -33,8 +35,11 @@ type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicE
 
 export function Wardrobe8(props: JSX.IntrinsicElements['group']) {
  const {dimensions} = useContext(DimensionContext)
+ const {material} = useContext(MaterialContext)
   const { nodes, materials } = useGLTF('/wardrobe-8.glb') as GLTFResult
   // console.log(materials.Main)
+  const bodymap = useLoader(THREE.TextureLoader,material.body.src)
+  const doormap = useLoader(THREE.TextureLoader,material.door.src)
   const {x,y,z} = dimensions
   return (
     <group {...props} dispose={null}>
@@ -47,7 +52,7 @@ export function Wardrobe8(props: JSX.IntrinsicElements['group']) {
         z 
        ]} >
         <meshStandardMaterial
-        {...materials.Main}
+         map={bodymap}
         />
       </mesh>
       <mesh 
@@ -56,14 +61,22 @@ export function Wardrobe8(props: JSX.IntrinsicElements['group']) {
         y ,
         z 
        ]} 
-        position={[-x/2.8,0,0]} rotation={[0,0,0]} geometry={nodes.Object_6.geometry}  material={materials.Main} />  
+        position={[-x/2.8,0,0]} rotation={[0,0,0]} geometry={nodes.Object_6.geometry}>
+        <meshStandardMaterial
+        map={doormap}
+        />  
+        </mesh>  
       <mesh 
        name="rightdoor" scale={[
         (x/2) ,
         y ,
         z 
        ]} 
-        position={[x/2.8,0,0]} rotation={[0,0,0]} geometry={nodes.Object_6.geometry}  material={materials.Main} />
+        position={[x/2.8,0,0]} rotation={[0,0,0]} geometry={nodes.Object_6.geometry}  material={materials.Main} >
+          <meshStandardMaterial
+          map={doormap}
+         /> 
+        </mesh>
      
       <mesh name="handle-1" scale={[x,y,z]} geometry={nodes.Object_8.geometry} material={materials.silver} />
       <mesh name="handle-2" scale={[x,y,z]} geometry={nodes.Object_10.geometry} material={materials.silver} />
