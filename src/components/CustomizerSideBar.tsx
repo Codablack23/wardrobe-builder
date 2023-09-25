@@ -1,4 +1,6 @@
+import { BaseFeature } from "./Features/BaseFeature";
 import { DimensionFeature } from "./Features/DimensionFeature";
+import { DoorFeature } from "./Features/DoorFeature";
 import { MaterialFeature } from "./Features/MaterialFeature";
 
 export default function CustomizerSideBar(){
@@ -9,6 +11,8 @@ export default function CustomizerSideBar(){
           <div className="gap-1">
             <DimensionFeature/>
             <MaterialFeature/>
+            <BaseFeature/>
+            <DoorFeature/>
           </div>
         </div>
     )

@@ -11,7 +11,8 @@ export const MaterialFeature = ()=>{
   const iconRef = useRef<HTMLElement>(null)
   const toggleShown=()=>{
     ref.current?.classList.toggle("hidden")
-    // ref.current?.classList.toggle("overflow-hidden")
+    iconRef.current?.classList.toggle("bi-chevron-down")
+    iconRef.current?.classList.toggle("bi-chevron-up")
   }
   const handleSelect=(body:MaterialObject,door:MaterialObject,shelf:MaterialObject)=>{
     return ()=>{
@@ -37,7 +38,7 @@ export const MaterialFeature = ()=>{
          <div className="p-3">
             <div className="my-2">
                 <p className="font-medium mb-2">Body Material</p>
-                <div className="grid grid-cols-2 gap-3 h-44 overflow-y-auto">
+                <div className="grid grid-cols-4 gap-2 max-h-80 overflow-y-auto">
                     {materials.map(mat=>(
                         <div onClick={handleSelect(mat,material.door,material.shelf)} className="relative cursor-pointer">
                            {mat.name !== material.body.name
@@ -57,7 +58,7 @@ export const MaterialFeature = ()=>{
             </div> 
             <div className="my-2">
                 <p className="font-medium mb-2">Door Material</p>
-                <div className="grid grid-cols-2 gap-3 h-44 overflow-y-auto">
+                <div className="grid grid-cols-4 gap-2 max-h-80 overflow-y-auto">
                     {materials.map(mat=>(
                         <div onClick={handleSelect(material.body,mat,material.shelf)} className="relative cursor-pointer">
                            {mat.name !== material.door.name

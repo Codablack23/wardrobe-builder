@@ -20,7 +20,7 @@ export default function SelectAngle(){
               onChange={handleChange}
               options={[
                 { value: "1,0,0", label: 'Top View' },
-                { value: "0,0,0", label: 'Front View' },
+                { value: "0,1.9,0", label: 'Front View' },
                 // { value: [], label: '180 degree' },
                 { value: "0,1,0", label: 'Side View' },
               ]}

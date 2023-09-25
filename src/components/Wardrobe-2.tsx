@@ -8,9 +8,14 @@ Title: Wardrobe
 */
 
 import * as THREE from 'three'
-import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import React, { useContext, useRef } from 'react'
+import { useGLTF, useTexture } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
+import { DimensionContext } from '../contexts/DimensionContext'
+import { MaterialContext } from '../contexts/MaterialContext'
+import { useLoader } from '@react-three/fiber'
+import { BaseContext } from '../contexts/BaseContext'
+import { DoorsContext } from '../contexts/DoorsContext'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -68,33 +73,100 @@ type GLTFResult = GLTF & {
 type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
+
+  const {dimensions} = useContext(DimensionContext)
+  const {material} = useContext(MaterialContext)
+  const {base} = useContext(BaseContext)
+  const {shownDoors} = useContext(DoorsContext)
+
+  const doorTextureMap = useLoader(THREE.TextureLoader,material.door.src)
+  const bodyTextureMap = useLoader(THREE.TextureLoader,material.body.src)
+  const {x,y,z} = dimensions
   const { nodes, materials } = useGLTF('/wardrobe-2.glb') as GLTFResult
+
+  function generateColumns(amount:number){
+    if(amount < 2 ) return [0];
+    if(amount < 3) return [-0.5,0.5];
+    return [-0.65,0,0.65]
+  } 
+  function generateDoorSizes(amount:number){
+    if(amount < 2 ) return 1;// 1 = 0.5 2 places
+    if(amount < 3) return 2/3;
+    return 1/2 //0.5 = 0.25 == 4 places
+  }
+  function generateDoorPositions(amount:number){
+    if(amount < 2 ) return [-0.643,0.643];
+    if(amount < 3) return[-0.8573,0,0.8573];
+    return [-0.9645,-0.3215,0.3215,0.9645]
+  } 
+  function generateHandlePositions(amount:number){
+    if(amount < 2 ) return [-0.1,0.2];
+    if(amount < 3) return[-0.5,-0.25,0.6];
+    return [-0.70,-0.5,0.6,0.8]
+  }
+  console.log((90/x) * 2)
+  console.log((90/x))
+  console.log(2/(x/90))
   return (
-    <group {...props} dispose={null}>
-      <group rotation={[-Math.PI/2,0, 0]}>
-        <mesh name="back-side" geometry={nodes.Cube_0.geometry} material={materials['Material.007']} position={[0, 0, 2.1]} />
-        <mesh name="bottom-side" geometry={nodes.Cube001_0.geometry} material={materials['Material.011']} position={[0.969, 0, 0]} />
-        <mesh name="left-side" geometry={nodes.Cube002_0.geometry} material={materials['Material.003']} position={[0.964, -1.312, 2.064]} />
-        <mesh name="left-side" geometry={nodes.Cube003_0.geometry} material={materials['Material.002']} position={[0.969, 1.302, 2.051]} />
-        <mesh name="top-view" geometry={nodes.Cube004_0.geometry} material={materials['Material.001']} position={[0.969, 0, 4.119]} />
-        <mesh name="divider-1" geometry={nodes.Cube005_0.geometry} material={materials['Material.006']} position={[0.969, 0, 1.026]} />
-        <mesh name="divider-2" geometry={nodes.Cube006_0.geometry} material={materials['Material.010']} position={[0.969, 0.011, 0.525]} />
-        <mesh name="compartment-door-1" geometry={nodes.Cube007_0.geometry} material={materials['Material.008']} position={[1.949, -0.657, 0.513]} />
-        <mesh name="compartment-door-1" geometry={nodes.Cube008_0.geometry} material={materials['Material.009']} position={[1.949, 0.666, 0.513]} />
-        <mesh name="main-door-1" geometry={nodes.Cube009_0.geometry} material={materials['Material.004']} position={[1.82, -0.643, 2.581]} />
-        <mesh name="main-door-2" geometry={nodes.Cube010_0.geometry} material={materials['Material.005']} position={[1.82, 0.649, 2.579]} rotation={[Math.PI / 2, 0, 0]} scale={[1, 1.01, 1]} />
-        {/* <mesh geometry={nodes.Cylinder_0.geometry} material={materials['Material.016']} position={[1.96, -0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cylinder001_0.geometry} material={materials['Material.015']} position={[1.96, -0.108, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cylinder002_0.geometry} material={materials['Material.012']} position={[1.96, 0.139, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cylinder003_0.geometry} material={materials['Material.013']} position={[1.96, 0.139, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cylinder004_0.geometry} material={materials['Material.022']} position={[1.96, 0.139, 0.583]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cylinder005_0.geometry} material={materials['Material.023']} position={[1.96, 0.139, 0.443]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cylinder006_0.geometry} material={materials.Spot} position={[1.96, -0.118, 0.443]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cylinder007_0.geometry} material={materials['Material.018']} position={[1.96, -0.118, 0.583]} rotation={[Math.PI / 2, 1.571, 0]} /> */}
-        {/* <mesh geometry={nodes.Cube011_0.geometry} material={materials['Material.014']} position={[2.008, 0.13, 2.606]} /> */}
-        {/* <mesh geometry={nodes.Cube012_0.geometry} material={materials['Material.017']} position={[2.008, -0.101, 2.606]} /> */}
-        {/* <mesh geometry={nodes.Cube013_0.geometry} material={materials['Material.020']} position={[1.993, -0.12, 0.523]} /> */}
-        {/* <mesh geometry={nodes.Cube014_0.geometry} material={materials['Material.021']} position={[1.993, 0.136, 0.523]} /> */}
+    <group {...props} dispose={null} scale={[z*2,y,x*2]}>
+      <group rotation={[-Math.PI/2,0, Math.PI]}>
+        <mesh name="back-side" geometry={nodes.Cube_0.geometry} position={[0, 0, 2.1]}>
+           <meshStandardMaterial
+           map={bodyTextureMap}
+           />
+        </mesh>
+        <mesh name="bottom-side"
+        scale={[1,1,base/10]}
+         geometry={nodes.Cube001_0.geometry} material={materials['Material.011']} position={[0.969, 0, 0]}>
+        <meshStandardMaterial
+           map={bodyTextureMap}
+        />
+        </mesh>
+        <mesh name="left-side" geometry={nodes.Cube002_0.geometry} material={materials['Material.003']} position={[0.964, -1.312, 2.064]}>
+        <meshStandardMaterial
+           map={bodyTextureMap}/>
+        </mesh>
+        <mesh name="right-side" geometry={nodes.Cube003_0.geometry} material={materials['Material.002']} position={[0.969, 1.302, 2.051]} >
+        <meshStandardMaterial
+           map={bodyTextureMap}/>
+        </mesh>
+        <mesh name="top-view" geometry={nodes.Cube004_0.geometry} material={materials['Material.001']} position={[0.969, 0, 4.119]}>
+        <meshStandardMaterial
+           map={bodyTextureMap}/>
+        </mesh>
+        {generateColumns(x/90).map((item,i)=>(
+           <mesh scale={[0.95,0.5,4.50]} name="divider-2" geometry={nodes.Cube006_0.geometry} material={materials['Material.010']} position={[0.969, item, 2]} >
+           <meshStandardMaterial
+           map={bodyTextureMap}
+           />
+         </mesh>
+        ))}
+         {generateDoorPositions(x/90).map((item,i)=>(
+            <mesh visible={shownDoors[i]} scale={[1,generateDoorSizes(x/90),1.38]} name="main-door-1" geometry={nodes.Cube009_0.geometry} position={[1.85, item, 2.1]} >
+            <meshStandardMaterial
+             map={doorTextureMap}
+             />
+            </mesh> 
+         ))}
+        {/* <mesh name="shelf" scale={[1,(90/x)/2,0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, -1, 1.026]}>
+           <meshStandardMaterial
+           map={bodyTextureMap}
+           />
+        </mesh>  */}
+        {/* <mesh name="divider-1" scale={[1,0.25,0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, 0.34, y/y + 1]}>
+           <meshStandardMaterial
+           map={bodyTextureMap}
+           />
+        </mesh>  */}
+       
+       
+        {generateHandlePositions(x/90).map((item,i)=>(
+            <group visible={shownDoors[i]} scale={[1,0.5,1]} name="full-handle" position={[0,item,0]}>
+            <mesh geometry={nodes.Cylinder_0.geometry} name="holder-down" material={materials['Material.016']} position={[1.96, -0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} />
+            <mesh geometry={nodes.Cylinder001_0.geometry} name="holder-up"  material={materials['Material.015']} position={[1.96, -0.108, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} />
+            <mesh geometry={nodes.Cube012_0.geometry} name="handle-bar" material={materials['Material.017']} position={[2.008, -0.101, 2.606]} />
+          </group> 
+        ))}
       </group>
     </group>
   )

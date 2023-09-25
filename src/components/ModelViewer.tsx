@@ -28,7 +28,8 @@ export default function ModelViewer(){
                    {/* <Wardrobe4/> */}
                    {/* <Wardrobe5/> */}
                 
-                   <Wardrobe8/>
+                   {/* <Wardrobe8/> */}
+                   <Wardrobe2/>
                    </Stage> 
                  </PresentationControls>
                </Canvas>

@@ -12,7 +12,8 @@ export const DimensionFeature = ()=>{
   }
   const toggleShown=()=>{
     ref.current?.classList.toggle("hidden")
-    // ref.current?.classList.toggle("overflow-hidden")
+    iconRef.current?.classList.toggle("bi-chevron-down")
+    iconRef.current?.classList.toggle("bi-chevron-up")
   }
   return (
     <div className="bg-gray-200 rounded-md p-2 mb-2">

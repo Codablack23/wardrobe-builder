@@ -47,17 +47,28 @@ export function Wardrobe8(props: JSX.IntrinsicElements['group']) {
        name="main-body" 
        geometry={nodes.Object_4.geometry} 
        scale={[
-        x ,
+        x * 2,
         y ,
-        z 
+        z*2
        ]} >
         <meshStandardMaterial
          map={bodymap}
         />
       </mesh>
       <mesh 
+       name="section" scale={[
+        z*2,
+        y ,
+        1
+       ]} 
+        position={[-x/2.8,0,0]} rotation={[0,Math.PI,0]} geometry={nodes.Object_6.geometry}>
+        <meshStandardMaterial
+        map={doormap}
+        />  
+        </mesh> 
+      {/* <mesh 
        name="leftdoor" scale={[
-       (x/2) ,
+       (x) ,
         y ,
         z 
        ]} 
@@ -68,15 +79,15 @@ export function Wardrobe8(props: JSX.IntrinsicElements['group']) {
         </mesh>  
       <mesh 
        name="rightdoor" scale={[
-        (x/2) ,
+        (x) ,
         y ,
-        z 
+        z
        ]} 
         position={[x/2.8,0,0]} rotation={[0,0,0]} geometry={nodes.Object_6.geometry}  material={materials.Main} >
           <meshStandardMaterial
           map={doormap}
          /> 
-        </mesh>
+        </mesh> */}
      
       <mesh name="handle-1" scale={[x,y,z]} geometry={nodes.Object_8.geometry} material={materials.silver} />
       <mesh name="handle-2" scale={[x,y,z]} geometry={nodes.Object_10.geometry} material={materials.silver} />
