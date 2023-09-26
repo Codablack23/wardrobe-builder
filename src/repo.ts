@@ -22,3 +22,31 @@ export const materials:MaterialObject[] = [
        src:"/materials/laminate_floor.jpg"
     }
 ]
+
+export const shelvesData = [
+   {
+     column:1,
+     shelf_no:1,
+     isShown:false
+   },
+   {
+     column:2,
+     shelf_no:1,
+     isShown:false
+   },
+   {
+     column:3,
+     shelf_no:1,
+     isShown:false
+   },
+   {
+     column:4,
+     shelf_no:1,
+     isShown:false
+   },
+   {
+     column:5,
+     shelf_no:1,
+     isShown:false
+   }
+]

@@ -2,6 +2,7 @@ import { BaseFeature } from "./Features/BaseFeature";
 import { DimensionFeature } from "./Features/DimensionFeature";
 import { DoorFeature } from "./Features/DoorFeature";
 import { MaterialFeature } from "./Features/MaterialFeature";
+import { ShelvesFeature } from "./Features/ShelvesFeature";
 
 export default function CustomizerSideBar(){
   return (
@@ -13,6 +14,7 @@ export default function CustomizerSideBar(){
             <MaterialFeature/>
             <BaseFeature/>
             <DoorFeature/>
+            <ShelvesFeature/>
           </div>
         </div>
     )

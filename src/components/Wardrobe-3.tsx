@@ -31,8 +31,8 @@ export function Wardrobe3(props: JSX.IntrinsicElements['group']) {
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
         <mesh name="whole-body" geometry={nodes.wardrobe__0.geometry} material={materials['Scene_-_Root']} />
-        {/* <mesh name="left-door" geometry={nodes.door_L__0.geometry} material={materials['Scene_-_Root']} position={[-0.669, -0.373, 1.043]} /> */}
-        {/* <mesh name="right-door" geometry={nodes.door_R__0.geometry} material={materials['Scene_-_Root']} position={[0.669, -0.373, 1.043]} /> */}
+        <mesh name="left-door" geometry={nodes.door_L__0.geometry} material={materials['Scene_-_Root']} position={[-0.669, -0.373, 1.043]} />
+        <mesh name="right-door" geometry={nodes.door_R__0.geometry} material={materials['Scene_-_Root']} position={[0.669, -0.373, 1.043]} />
       </group>
     </group>
   )

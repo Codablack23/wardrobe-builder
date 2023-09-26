@@ -16,6 +16,7 @@ import { MaterialContext } from '../contexts/MaterialContext'
 import { useLoader } from '@react-three/fiber'
 import { BaseContext } from '../contexts/BaseContext'
 import { DoorsContext } from '../contexts/DoorsContext'
+import { ShelvesContext } from '../contexts/ShelvesContext'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -78,9 +79,11 @@ export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
   const {material} = useContext(MaterialContext)
   const {base} = useContext(BaseContext)
   const {shownDoors} = useContext(DoorsContext)
+  const {shelves} = useContext(ShelvesContext)
 
   const doorTextureMap = useLoader(THREE.TextureLoader,material.door.src)
   const bodyTextureMap = useLoader(THREE.TextureLoader,material.body.src)
+  const railTextureMap = useLoader(THREE.TextureLoader,"/materials/metal.jpg")
   const {x,y,z} = dimensions
   const { nodes, materials } = useGLTF('/wardrobe-2.glb') as GLTFResult
 
@@ -98,10 +101,18 @@ export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
     if(amount < 2 ) return [-0.643,0.643];
     if(amount < 3) return[-0.8573,0,0.8573];
     return [-0.9645,-0.3215,0.3215,0.9645]
+  }  
+  function generateShelfPositions(amount:number){
+    if(amount >5)return [0.5,1.25,2,2.75,3.5]
+    if(amount >4)return [0.85,1.75,2.5,3.35]
+    if(amount >3)return [1,2.25,3.25]
+    if(amount >2)return [1.5,3]
+    if(amount >0)return [2]
+    return []
   } 
   function generateHandlePositions(amount:number){
-    if(amount < 2 ) return [-0.1,0.2];
-    if(amount < 3) return[-0.5,-0.25,0.6];
+    if(amount === 2 ) return [-0.1,0.2];
+    if(amount == 3) return[-0.5,-0.25,0.6];
     return [-0.70,-0.5,0.6,0.8]
   }
   console.log((90/x) * 2)
@@ -142,16 +153,33 @@ export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
          </mesh>
         ))}
          {generateDoorPositions(x/90).map((item,i)=>(
+            <>
             <mesh visible={shownDoors[i]} scale={[1,generateDoorSizes(x/90),1.38]} name="main-door-1" geometry={nodes.Cube009_0.geometry} position={[1.85, item, 2.1]} >
-            <meshStandardMaterial
-             map={doorTextureMap}
-             />
+              <meshStandardMaterial
+              map={doorTextureMap}
+              />
             </mesh> 
+            <mesh position={[1, item, 3.75]}>
+              <cylinderBufferGeometry args={[0.0125,0.0125,generateDoorSizes(x/90) * 1.35,30]}/>
+              <meshStandardMaterial
+              visible={!shelves[i].isShown}
+              map={railTextureMap}
+              />
+            </mesh>
+            </>
          ))}
-        {/* <mesh name="shelf" scale={[1,(90/x)/2,0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, -1, 1.026]}>
-           <meshStandardMaterial
-           map={bodyTextureMap}
-           />
+          {generateDoorPositions(x/90).map((xPos,i)=>(
+            generateShelfPositions(shelves[i].shelf_no + 1).map((yPos)=>(
+              <mesh 
+              visible={shelves[i].isShown}
+              name="shelf" scale={[1,(generateDoorSizes(x/90)/2),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, xPos, yPos]}>
+              <meshStandardMaterial
+              map={bodyTextureMap}
+              />
+              </mesh> 
+            ))
+         ))}
+        {/* 
         </mesh>  */}
         {/* <mesh name="divider-1" scale={[1,0.25,0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, 0.34, y/y + 1]}>
            <meshStandardMaterial
@@ -159,7 +187,7 @@ export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
            />
         </mesh>  */}
        
-       
+      
         {generateHandlePositions(x/90).map((item,i)=>(
             <group visible={shownDoors[i]} scale={[1,0.5,1]} name="full-handle" position={[0,item,0]}>
             <mesh geometry={nodes.Cylinder_0.geometry} name="holder-down" material={materials['Material.016']} position={[1.96, -0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} />

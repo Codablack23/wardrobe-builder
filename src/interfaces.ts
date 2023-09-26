@@ -36,3 +36,9 @@ export interface MaterialContextObject{
     body:MaterialObject,
     [key:string]:MaterialObject
 }
+
+export interface ShelfObject{
+        column:number,
+        shelf_no:number,
+        isShown:boolean
+}
