@@ -8,6 +8,7 @@ import MaterialContextProvider from './contexts/MaterialContext'
 import BaseContextProvider from './contexts/BaseContext'
 import DoorsContextProvider from './contexts/DoorsContext'
 import ShelvesContextProvider from './contexts/ShelvesContext'
+import LayoutContextProvider from './contexts/LayoutContext'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <ViewContextProvider>
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <BaseContextProvider>
           <DoorsContextProvider>
           <ShelvesContextProvider>
+          <LayoutContextProvider>
             <App />
+          </LayoutContextProvider>
           </ShelvesContextProvider>
           </DoorsContextProvider>
            </BaseContextProvider>

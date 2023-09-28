@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { ContextProviderProps, Dimension, DimensionContextObject, Unit } from "../interfaces";
-import { Wardrobe8 } from "../components/Wardrobe-8";
+
 
 export const DimensionContext = createContext({
     dimensions:{
@@ -12,7 +12,19 @@ export const DimensionContext = createContext({
         name:"cm",
         conversion:1
     },
+    maxValues:{
+        x:360,
+        y:270,
+        z:90
+    },  
+    minValues:{
+        x:90,
+        y:230,
+        z:60
+    },
     setDimension:(newDimension:Dimension)=>{},
+    setMaxValues:(newDimension:Dimension)=>{},
+    setMinValues:(newDimension:Dimension)=>{},
     setUnit:(newUnit:Unit)=>{}
 })
 
@@ -26,15 +38,29 @@ export default function DimensionContextProvider(props:ContextProviderProps){
         x:90,
         y:215,
         z:60
+    }) 
+     const [minValues,setMinValues] = useState({
+        x:90,
+        y:215,
+        z:60
+    }) 
+    const [maxValues,setMaxValues] = useState({
+        x:360,
+        y:270,
+        z:90
     })
  
   
     return(
         <DimensionContext.Provider value={{
           dimensions,
+          minValues,
+          setMinValues,
           unit,
           setDimension,
-          setUnit       
+          setUnit,
+          maxValues,
+          setMaxValues     
         }}>
             {props.children}
         </DimensionContext.Provider>

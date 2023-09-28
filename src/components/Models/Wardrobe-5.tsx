@@ -8,9 +8,11 @@ Title: Wardrobe
 */
 
 import * as THREE from 'three'
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
+import { MaterialContext } from '../../contexts/MaterialContext'
+import { useLoader } from '@react-three/fiber'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -35,12 +37,19 @@ type GLTFResult = GLTF & {
 type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function Wardrobe5(props: JSX.IntrinsicElements['group']) {
+  const {material} = useContext(MaterialContext)
+  const bodyMap = useLoader(THREE.TextureLoader,material.body.src)
+  const Material = new  THREE.MeshStandardMaterial()
+  Material.map = bodyMap
   const { nodes, materials } = useGLTF('/wardrobe-5.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.027}>
         <group rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.Wardrobe__0.geometry} material={materials.Wardrobe__0} position={[-0.828, 37.469, 0.924]} rotation={[-Math.PI, 0, Math.PI / 2]} />
+          <mesh 
+          material={Material}
+          geometry={nodes.Wardrobe__0.geometry}  position={[-0.828, 37.469, 0.924]} rotation={[-Math.PI, 0, Math.PI / 2]} />
+         
           <mesh name="hinge-1" geometry={nodes['Box001_Material_#27_0'].geometry} material={materials.Material_27} position={[-1.884, 7.269, -20.79]} rotation={[-Math.PI, 0, 0]} />
           <mesh name="hinge-2" geometry={nodes['Box002_Material_#27_0'].geometry} material={materials.Material_27} position={[-1.884, 37.131, -20.79]} rotation={[-Math.PI, 0, 0]} />
           <mesh name="hinge-3" geometry={nodes['Box003_Material_#27_0'].geometry} material={materials.Material_27} position={[-1.884, 67.214, -20.79]} rotation={[-Math.PI, 0, 0]} />

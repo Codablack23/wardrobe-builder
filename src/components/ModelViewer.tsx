@@ -4,14 +4,13 @@ import { Vector3 } from "three"
 import {ViewContext} from "../contexts/ViewContext"
 import Loader from "./Loader"
 import { Suspense, useContext} from "react"
-import { Wardrobe8 } from "./Wardrobe-8"
-import { Wardrobe2 } from "./Wardrobe-2"
-import { Wardrobe3 } from "./Wardrobe-3"
-import { Wardrobe4 } from "./Wardrobe-4"
-import { Wardrobe5 } from "./Wardrobe-5"
+import { LayoutContext } from "../contexts/LayoutContext"
+import { BookShelf2 } from "./Models/Book_shelf_2"
+
 
 export default function ModelViewer(){
     const {angle} = useContext(ViewContext)
+    const {layout} = useContext(LayoutContext)
     return (
         <>
             <Suspense fallback={<Loader/>}>
@@ -23,13 +22,7 @@ export default function ModelViewer(){
                    intensity={0.6} 
                    castShadow={false}
                    >
-                   {/* <Wardrobe2/> */}
-                   {/* <Wardrobe3/> */}
-                   {/* <Wardrobe4/> */}
-                   {/* <Wardrobe5/> */}
-                
-                   {/* <Wardrobe8/> */}
-                   <Wardrobe2/>
+                   <layout.Model/>
                    </Stage> 
                  </PresentationControls>
                </Canvas>

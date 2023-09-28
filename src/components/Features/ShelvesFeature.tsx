@@ -68,7 +68,7 @@ export const ShelvesFeature = ()=>{
            new Array(parseInt(((x/90) !== 4?(x/90) + 1:4).toString()))
            .fill("")
            .map((item,i)=>(
-             <div>
+             <div key={`column-${i+1}`}>
                 <div className="flex bg-white p-2 py-3 mb-2 rounded-md items-center my-2 justify-between">
                 <div>
                   <p>Column {i + 1}</p>

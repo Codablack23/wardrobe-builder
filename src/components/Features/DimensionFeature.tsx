@@ -1,10 +1,9 @@
 import { Slider } from "antd"
 import { useContext, useRef } from "react"
 import { DimensionContext } from "../../contexts/DimensionContext"
-import { DimensionContextObject } from "../../interfaces"
 
 export const DimensionFeature = ()=>{
-  const {dimensions,setDimension,unit} = useContext(DimensionContext)
+  const {dimensions,setDimension,unit,maxValues,minValues} = useContext(DimensionContext)
   const ref = useRef<HTMLDivElement>(null)
   const iconRef = useRef<HTMLElement>(null)
   const handleSlide=(x:number,y:number,z:number)=>{
@@ -31,24 +30,24 @@ export const DimensionFeature = ()=>{
          <div>
             <p>Current Width:{dimensions.x * unit.conversion}{unit.name}</p>
             <Slider
-             min={(90/360) * 100}
-             value={(dimensions.x/360) * 100}
-             onChange={(value)=>handleSlide(((value*360)/100),dimensions.y,dimensions.z)}
+             min={(minValues.x/maxValues.x) * 100}
+             value={(dimensions.x/maxValues.x) * 100}
+             onChange={(value)=>handleSlide(((value*maxValues.x)/100),dimensions.y,dimensions.z)}
             />
           </div> 
           <div>
             <p>Current Height:{dimensions.y * unit.conversion}{unit.name}</p>
             <Slider
-             min={(215/270) * 100}
-             value={(dimensions.y/270) * 100}
-             onChange={(value)=>handleSlide(dimensions.x,((value*270)/100),dimensions.z)}
+             min={(minValues.y/maxValues.y) * 100}
+             value={(dimensions.y/maxValues.y) * 100}
+             onChange={(value)=>handleSlide(dimensions.x,((value*maxValues.y)/100),dimensions.z)}
             />
           </div>
            <div>
             <p>Current Depth:{dimensions.z * unit.conversion}{unit.name}</p>
             <Slider
-             min={(60/90) * 100}
-             value={(dimensions.z/90) * 100}
+             min={(minValues.z/maxValues.z) * 100}
+             value={(dimensions.z/maxValues.z) * 100}
              onChange={(value)=>handleSlide(dimensions.x,dimensions.y,((value*90)/100))}
             />
           </div>

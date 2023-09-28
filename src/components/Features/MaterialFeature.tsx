@@ -3,10 +3,12 @@ import { useContext, useRef } from "react"
 import { materials } from "../../repo"
 import { MaterialContext } from "../../contexts/MaterialContext"
 import { MaterialObject } from "../../interfaces"
+import { LayoutContext } from "../../contexts/LayoutContext"
 
 
 export const MaterialFeature = ()=>{
   const {material,setMaterial} = useContext(MaterialContext)
+  const {layout} = useContext(LayoutContext)
   const ref = useRef<HTMLDivElement>(null)
   const iconRef = useRef<HTMLElement>(null)
   const toggleShown=()=>{
@@ -40,7 +42,7 @@ export const MaterialFeature = ()=>{
                 <p className="font-medium mb-2">Body Material</p>
                 <div className="grid grid-cols-4 gap-2 max-h-80 overflow-y-auto">
                     {materials.map(mat=>(
-                        <div onClick={handleSelect(mat,material.door,material.shelf)} className="relative cursor-pointer">
+                        <div key={mat.name} onClick={handleSelect(mat,material.door,material.shelf)} className="relative cursor-pointer">
                            {mat.name !== material.body.name
                            ?<button className="w-5 h-5 z-20 rounded-full absolute top-2 right-2 border border-white"></button>
                            :<button className="w-5 h-5 z-20 rounded-full absolute top-2 right-2 ">
@@ -56,11 +58,11 @@ export const MaterialFeature = ()=>{
                     ))}
                 </div>
             </div> 
-            <div className="my-2">
-                <p className="font-medium mb-2">Door Material</p>
+            {layout.type === "wardrobe" || layout.type === "shelf" ?<div className="my-2">
+                <p className="font-medium mb-2">{layout.type === "wardrobe"?"Door Material":"Handle Material"}</p>
                 <div className="grid grid-cols-4 gap-2 max-h-80 overflow-y-auto">
                     {materials.map(mat=>(
-                        <div onClick={handleSelect(material.body,mat,material.shelf)} className="relative cursor-pointer">
+                        <div key={mat.name} onClick={handleSelect(material.body,mat,material.shelf)} className="relative cursor-pointer">
                            {mat.name !== material.door.name
                            ?<button className="w-5 h-5 z-20 rounded-full absolute top-2 right-2 border border-white"></button>
                            :<button className="w-5 h-5 z-20 rounded-full absolute top-2 right-2 ">
@@ -76,6 +78,8 @@ export const MaterialFeature = ()=>{
                     ))}
                 </div>
             </div>
+           :null  
+          }
          </div>
           
         </div>

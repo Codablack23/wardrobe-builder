@@ -1,3 +1,4 @@
+import { GroupProps } from "@react-three/fiber"
 import { Children, ReactNode } from "react"
 import { Texture } from "three"
 
@@ -41,4 +42,14 @@ export interface ShelfObject{
         column:number,
         shelf_no:number,
         isShown:boolean
+}
+export interface WardrobeLayoutObject{
+    name:string,
+    type:string
+    id:number
+    slug:string
+    Model:(props: GroupProps) => JSX.Element,
+    preview?:string,
+    minValues:Dimension,
+    maxValues:Dimension
 }

@@ -40,7 +40,7 @@ export const DoorFeature = ()=>{
            new Array(parseInt(((x/90) !== 4?(x/90) + 1:4).toString()))
            .fill("")
            .map((item,i)=>(
-            <div className="flex bg-white p-2 py-3 mb-2 rounded-md items-center my-2 justify-between">
+            <div key={`door-${i + 1}`} className="flex bg-white p-2 py-3 mb-2 rounded-md items-center my-2 justify-between">
              <div>
                 <p>Column {i + 1}</p>
              </div>
