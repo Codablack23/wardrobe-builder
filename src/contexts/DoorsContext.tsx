@@ -2,16 +2,17 @@ import { createContext, useState } from "react";
 import { ContextProviderProps } from "../interfaces";
 
 export const DoorsContext = createContext({
-    shownDoors:[false,false,false,false],
-    setShownDoors:(shownDoors:boolean[])=>{
-
-    }
+    doors:"none",
+    doorMirror:"none",
+    setDoors:(newDoor:string)=>{},
+    setDoorMirror:(newDoorMirror:string)=>{},
 })
 
 export default function DoorsContextProvider(props:ContextProviderProps){
-    const [shownDoors,setShownDoors] = useState([false,false,false,false])
+    const [doors,setDoors] = useState("none")
+    const [doorMirror,setDoorMirror] = useState("none")
    return (
-    <DoorsContext.Provider value={{shownDoors,setShownDoors}}>
+    <DoorsContext.Provider value={{doors,setDoors,doorMirror,setDoorMirror}}>
         {props.children}
     </DoorsContext.Provider>
    )

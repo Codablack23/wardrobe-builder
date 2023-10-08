@@ -35,7 +35,7 @@ export function BookShelf2(props: JSX.IntrinsicElements['group']) {
   const {x,y,z} = dimensions
   const { nodes, materials } = useGLTF('/book_shelf_2.glb') as GLTFResult
   return (
-    <group {...props} dispose={null} scale={[x,y,z*3]}>
+    <group {...props} dispose={null} scale={[x,y/1.5,z * 1.5]}>
       <mesh geometry={nodes.bookShelf_BookShelf_Brown_0.geometry} material={BodyMaterial} scale={0.01} />
     </group>
   )

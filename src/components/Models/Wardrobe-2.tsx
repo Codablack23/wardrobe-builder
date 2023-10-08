@@ -17,6 +17,13 @@ import { useLoader } from '@react-three/fiber'
 import { BaseContext } from '../../contexts/BaseContext'
 import { DoorsContext } from '../../contexts/DoorsContext'
 import { ShelvesContext } from '../../contexts/ShelvesContext'
+import { DividerContext } from '../../contexts/DividerContext'
+import { RailsContext } from '../../contexts/RailsContext'
+import { NightStand } from './Night_stand'
+import { MirrorModel } from './Mirror2'
+import {DrawerContext} from '../../contexts/DrawersContext'
+import { DividerExtraContext } from '../../contexts/DividerExtrasContext'
+import { OldMirror } from './Old_mirror'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -76,47 +83,71 @@ type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicE
 export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
 
   const {dimensions} = useContext(DimensionContext)
+  const {drawers,topDrawers} = useContext(DrawerContext)
+  const {dividerRail,dividerShelves,dividerTopShelves} = useContext(DividerExtraContext)
+  const {rails} = useContext(RailsContext)
+  const {divider} = useContext(DividerContext)
   const {material} = useContext(MaterialContext)
   const {base} = useContext(BaseContext)
-  const {shownDoors} = useContext(DoorsContext)
-  const {shelves} = useContext(ShelvesContext)
+  const {doors,doorMirror} = useContext(DoorsContext)
+  const {shelves,topShelves} = useContext(ShelvesContext)
 
   const doorTextureMap = useLoader(THREE.TextureLoader,material.door.src)
   const bodyTextureMap = useLoader(THREE.TextureLoader,material.body.src)
   const railTextureMap = useLoader(THREE.TextureLoader,"/materials/metal.jpg")
   const {x,y,z} = dimensions
   const { nodes, materials } = useGLTF('/wardrobe-2.glb') as GLTFResult
-
-  function generateColumns(amount:number){
-    if(amount < 2 ) return [0];
-    if(amount < 3) return [-0.5,0.5];
-    return [-0.65,0,0.65]
-  } 
-  function generateDoorSizes(amount:number){
-    if(amount < 2 ) return 1;// 1 = 0.5 2 places
-    if(amount < 3) return 2/3;
-    return 1/2 //0.5 = 0.25 == 4 places
+ 
+  function generateShelfPositions(amount:number,shelfType="bottom"){
+    return new Array(amount).fill(amount).map((item,i)=>{
+       return shelfType === "top"? (4.05 ) - (0.45 * (i + 1)):(0.45 * (i + 1))
+    })
   }
-  function generateDoorPositions(amount:number){
-    if(amount < 2 ) return [-0.643,0.643];
-    if(amount < 3) return[-0.8573,0,0.8573];
-    return [-0.9645,-0.3215,0.3215,0.9645]
+  function generateShelfPositionX(divider:string){
+    if(divider === "center") return -0.65;
+    if(divider === "left") return -0.90
+    if(divider === "right") return -0.4
+    return 0
   }  
-  function generateShelfPositions(amount:number){
-    if(amount >5)return [0.5,1.25,2,2.75,3.5]
-    if(amount >4)return [0.85,1.75,2.5,3.35]
-    if(amount >3)return [1,2.25,3.25]
-    if(amount >2)return [1.5,3]
-    if(amount >0)return [2]
-    return []
-  } 
-  function generateHandlePositions(amount:number){
-    if(amount === 2 ) return [-0.1,0.2];
-    if(amount == 3) return[-0.5,-0.25,0.6];
-    return [-0.70,-0.5,0.6,0.8]
+  function generateDividerShelfPositionX(divider:string){
+    if(divider === "center") return 0.65;
+    if(divider === "left") return 0.4
+    if(divider === "right") return 0.9
+    return 0
+  }  
+  function generateDividerPositionX(divider:string){
+    if(divider === "center") return 0;
+    if(divider === "left") return -0.5
+    if(divider === "right") return 0.5
+    return 0
   }
+  function generateShelfWidth(divider:string){
+     if(divider === "center") return (x/90) * 0.5;
+     if(divider === "left") return (x/90) * 0.32;
+     if(divider === "right") return (x/90) * 0.7;
+     return x/90
+  }  
+  function generateDividerShelfWidth(divider:string){
+     if(divider === "center") return (x/90) * 0.5;
+     if(divider === "left") return (x/90) * 0.7;
+     if(divider === "right") return (x/90) * 0.32;
+     return x/90
+  } 
+  function generateRailWidth(divider:string){
+     if(divider === "center") return 2.5 * 0.5;
+     if(divider === "left") return   2.5 * 0.32;
+     if(divider === "right") return  2.5 * 0.7;
+     return 2.5
+  }  
+  function generateDividerRailWidth(divider:string){
+     if(divider === "center") return 2.5 * 0.5;
+     if(divider === "left") return   2.5 * 0.7;
+     if(divider === "right") return  2.5 * 0.32;
+     return 2.5
+  }
+  
   return (
-    <group {...props} dispose={null} scale={[z*2,y,x*2]}>
+    <group {...props} dispose={null} scale={[z*2,y,x + 40]}>
       <group rotation={[-Math.PI/2,0, Math.PI]}>
         <mesh name="back-side" geometry={nodes.Cube_0.geometry} position={[0, 0, 2.1]}>
            <meshStandardMaterial
@@ -142,57 +173,204 @@ export function Wardrobe2(props: JSX.IntrinsicElements['group']) {
         <meshStandardMaterial
            map={bodyTextureMap}/>
         </mesh>
-        {generateColumns(x/90).map((item,i)=>(
-           <mesh key={`divider-1`} scale={[0.95,0.5,4.50]} name="divider-2" geometry={nodes.Cube006_0.geometry} material={materials['Material.010']} position={[0.969, item, 2]} >
-           <meshStandardMaterial
-           map={bodyTextureMap}
-           />
-         </mesh>
-        ))}
-         {generateDoorPositions(x/90).map((item,i)=>(
-            <group key={`door-${i}`}>
-            <mesh visible={shownDoors[i]} scale={[1,generateDoorSizes(x/90),1.38]} name="main-door-1" geometry={nodes.Cube009_0.geometry} position={[1.85, item, 2.1]} >
+        <mesh scale={[0.95,0.5,4.50]} visible={divider !== "none"} name="divider-2" geometry={nodes.Cube006_0.geometry} material={materials['Material.010']} position={[0.969, generateDividerPositionX(divider), 2]} >
+          <meshStandardMaterial
+          map={bodyTextureMap}
+          />
+       </mesh>
+
+           <mesh position={[1,generateShelfPositionX(divider), 3.85]}>
+              <cylinderGeometry  args={[0.0125,0.0125,generateRailWidth(divider),30]}/>
+              <meshStandardMaterial
+               
+               visible={rails === "double" || rails === "double_and_shelf" || rails === "single"}
+              map={railTextureMap}
+              />
+            </mesh>  
+            <mesh position={[1,generateShelfPositionX(divider), 2]}>
+              <cylinderGeometry args={[0.0125,0.0125,generateRailWidth(divider),30]}/>
+              <meshStandardMaterial
+               visible={rails === "double" || rails === "double_and_shelf" }
+              map={railTextureMap}
+              />
+            </mesh>
+            <group  visible={rails === "forward" }>
+            <mesh position={[1,generateShelfPositionX(divider), 3.85]} rotation={[0,0,1.5]}>
+              <cylinderGeometry args={[0.0125,0.0125,1,30]}/>
+              <meshStandardMaterial
+              map={railTextureMap}
+              />
+            </mesh>  
+            <mesh position={[1.5,generateShelfPositionX(divider), 3.95]} rotation={[1.5,0,0]}>
+               <cylinderGeometry args={[0.025,0.025,0.25,30]}/>
+               <meshStandardMaterial
+               map={railTextureMap}
+              />
+            </mesh>
+            </group>
+            <mesh 
+              name="shelf" scale={[1,(generateShelfWidth(divider)),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, generateShelfPositionX(divider), 2.70]}>
+              <meshStandardMaterial
+              map={bodyTextureMap}
+              visible={rails === "double_and_shelf" }
+              />
+              </mesh> 
+              {
+                divider !== "none"?(
+                  <>
+                  <mesh position={[1,generateDividerShelfPositionX(divider), 3.85]}>
+                  <cylinderGeometry  args={[0.0125,0.0125,generateDividerRailWidth(divider),30]}/>
+                  <meshStandardMaterial
+                   
+                   visible={dividerRail === "double" || dividerRail === "double_and_shelf" || dividerRail === "single"}
+                  map={railTextureMap}
+                  />
+                </mesh>  
+                <mesh position={[1,generateDividerShelfPositionX(divider), 2]}>
+                  <cylinderGeometry args={[0.0125,0.0125,generateDividerRailWidth(divider),30]}/>
+                  <meshStandardMaterial
+                   visible={dividerRail === "double" || dividerRail === "double_and_shelf" }
+                  map={railTextureMap}
+                  />
+                </mesh>
+                <group  visible={dividerRail === "forward" }>
+                <mesh position={[1,generateDividerShelfPositionX(divider), 3.85]} rotation={[0,0,1.5]}>
+                  <cylinderGeometry args={[0.0125,0.0125,1,30]}/>
+                  <meshStandardMaterial
+                  map={railTextureMap}
+                  />
+                </mesh>  
+                <mesh position={[1.5,generateDividerShelfPositionX(divider), 3.95]} rotation={[1.5,0,0]}>
+                   <cylinderGeometry args={[0.025,0.025,0.25,30]}/>
+                   <meshStandardMaterial
+                   map={railTextureMap}
+                  />
+                </mesh>
+                </group>
+                <mesh 
+                  name="shelf" scale={[1,(generateShelfWidth(divider)),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, generateDividerShelfPositionX(divider), 2.70]}>
+                  <meshStandardMaterial
+                  map={bodyTextureMap}
+                  visible={dividerRail === "double_and_shelf" }
+                  />
+                  </mesh>
+                </>
+                ):null
+              }
+              {/* openDoor ,position = [5.2,-0.85,0] rotation = [0,0,-Math.PI/1.5]*/}
+              {/* closedDoor ,position = [0,1.35,0] rotation = [0,0,0]*/}
+
+            <group 
+            visible={doors === "right" || doors === "both"} 
+            scale={[1,(doors === "right")?2.1:1.05,1]}   
+            position={[0,1.35,0]} 
+            rotation={[0,0,0]}
+            >
+            <mesh  scale={[0.125,1,1.38]} name="main-door-1" geometry={nodes.Cube009_0.geometry} position={[1.95, -0.65, 2.1]} >
               <meshStandardMaterial
               map={doorTextureMap}
               />
             </mesh> 
-            <mesh position={[1, item, 3.75]}>
-              <cylinderGeometry args={[0.0125,0.0125,generateDoorSizes(x/90) * 1.35,30]}/>
+              <OldMirror visible={doorMirror === "right" || doorMirror === "both"} scale={[1.5,1.75,2.25]} position={[2,-0.61,2.0]}/>
+              <group position={[0,doors === "both"?-1.05:0,0]}>
+                <mesh geometry={nodes.Cylinder_0.geometry} name="holder-down" material={materials['Material.016']} position={[1.96, -0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} />
+                <mesh geometry={nodes.Cylinder001_0.geometry} name="holder-up"  material={materials['Material.015']} position={[1.96, -0.108, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} />
+                <mesh scale={[1,0.5,1]} geometry={nodes.Cube012_0.geometry} name="handle-bar" material={materials['Material.017']} position={[2.008, -0.101, 2.606]} />
+              </group>
+            </group> 
+
+              {/* openDoor ,position = [5.2,0.65,0] rotation = [0,0,2]*/}
+              {/* closedDoor ,position = [0,-1.35,0] rotation = [0,0,0]*/}
+            <group 
+              visible={doors === "left" || doors === "both"} 
+              scale={[1,(doors === "left")?2.1:1.05,1]}  
+              position={[0,-1.35,0]} 
+              rotation={[0,0,0]}>
+            <mesh  scale={[0.125,1,1.38]} name="main-door-1" geometry={nodes.Cube009_0.geometry} position={[1.95, 0.65, 2.1]} >
               <meshStandardMaterial
-              visible={!shelves[i].isShown}
-              map={railTextureMap}
+              map={doorTextureMap}
               />
-            </mesh>
+            </mesh> 
+              <OldMirror visible={doorMirror === "left" || doorMirror === "both"} scale={[1.5,1.75,2.25]} position={[2,0.61,2.0]}/>
+               <group position={[0,doors === "both"?1.05:0,0]}>
+                 <mesh  geometry={nodes.Cylinder_0.geometry} name="holder-down" material={materials['Material.016']} position={[1.96, 0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} />
+                 <mesh geometry={nodes.Cylinder001_0.geometry} name="holder-up"  material={materials['Material.015']} position={[1.96, 0.108, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} />
+                 <mesh scale={[1,0.5,1]} geometry={nodes.Cube012_0.geometry} name="handle-bar" material={materials['Material.017']} position={[2.008, 0.101, 2.606]} />
+               </group>
             </group>
-         ))}
-          {generateDoorPositions(x/90).map((xPos,i)=>(
-            generateShelfPositions(shelves[i].shelf_no + 1).map((yPos)=>(
+           
+            {/* <Mirror scale={[0.01,0.0205,0.079]} position={[2.6,-3.68,-2.6]}/> */}
+         {
+          new Array(drawers).fill(0.5).map((item,index)=>item * index).map((item)=>(
+            <group position={[0,0,item]} name="drawers">
+            <mesh 
+                 name="shelf" scale={[0.89,x/90,0.20]} geometry={nodes.Cube005_0.geometry} position={[1.05, 0, 0.57]}>
+                 <meshStandardMaterial
+                 map={bodyTextureMap}
+                 />
+               </mesh>
+            <NightStand scale={[1.29,0.75,0.89]} position={[1,-0.1,-0.65]} rotation={[1.58,1.56,0]}/>
+            </group>
+          ))
+         } 
+         {new Array(topDrawers).fill(0.5).map((item,index)=>item * index).map((item)=>(
+            <group position={[0,0,item]} name="drawers">
+            <mesh 
+                 name="shelf" scale={[0.89,x/90,0.20]} geometry={nodes.Cube005_0.geometry} position={[1.05, 0, 0.57]}>
+                 <meshStandardMaterial
+                 map={bodyTextureMap}
+                 />
+               </mesh>
+            <NightStand scale={[1.29,0.75,0.89]} position={[1,-0.1,-0.65]} rotation={[1.58,1.56,0]}/>
+            </group>
+          ))
+         }
+          {
+            generateShelfPositions(shelves).map((yPos,j)=>(
               <mesh 
-              key={`divider-1`}
-              visible={shelves[i].isShown}
-              name="shelf" scale={[1,(generateDoorSizes(x/90)/2),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, xPos, yPos]}>
+              key={`shelf-${j}`}
+              name="shelf" scale={[0.90,(generateShelfWidth(divider)),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, generateShelfPositionX(divider), yPos]}>
               <meshStandardMaterial
               map={bodyTextureMap}
               />
               </mesh> 
             ))
-         ))}
-        {/* 
-        </mesh>  */}
-        {/* <mesh name="divider-1" scale={[1,0.25,0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, 0.34, y/y + 1]}>
-           <meshStandardMaterial
-           map={bodyTextureMap}
-           />
-        </mesh>  */}
-       
-      
-        {generateHandlePositions(x/90).map((item,i)=>(
-            <group key={`model-doors-${i}`} visible={shownDoors[i]} scale={[1,0.5,1]} name="full-handle" position={[0,item,0]}>
-            <mesh geometry={nodes.Cylinder_0.geometry} name="holder-down" material={materials['Material.016']} position={[1.96, -0.108, 2.386]} rotation={[Math.PI / 2, 1.571, 0]} />
-            <mesh geometry={nodes.Cylinder001_0.geometry} name="holder-up"  material={materials['Material.015']} position={[1.96, -0.108, 2.799]} rotation={[Math.PI / 2, 1.571, 0]} />
-            <mesh geometry={nodes.Cube012_0.geometry} name="handle-bar" material={materials['Material.017']} position={[2.008, -0.101, 2.606]} />
-          </group> 
-        ))}
+         }  
+         {
+            generateShelfPositions(topShelves,"top").map((yPos,j)=>(
+              <mesh 
+              key={`shelf-${j}`}
+              name="shelf" scale={[0.90,(generateShelfWidth(divider)),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969,generateShelfPositionX(divider), yPos]}>
+              <meshStandardMaterial
+              map={bodyTextureMap}
+              />
+              </mesh> 
+            ))
+         }  
+         {
+            generateShelfPositions(dividerShelves).map((yPos,j)=>(
+              <mesh 
+              visible={divider !== "none"}
+              key={`shelf-${j}`}
+              name="shelf" scale={[0.90,(generateDividerShelfWidth(divider)),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969, generateDividerShelfPositionX(divider), yPos]}>
+              <meshStandardMaterial
+              map={bodyTextureMap}
+              />
+              </mesh> 
+            ))
+         }  
+         {
+            generateShelfPositions(dividerTopShelves,"top").map((yPos,j)=>(
+              <mesh 
+              key={`shelf-${j}`}
+              visible={divider !== "none"}
+              name="shelf" scale={[0.90,(generateDividerShelfWidth(divider)),0.20]} geometry={nodes.Cube005_0.geometry} position={[0.969,generateDividerShelfPositionX(divider), yPos]}>
+              <meshStandardMaterial
+              map={bodyTextureMap}
+              />
+              </mesh> 
+            ))
+         }
       </group>
     </group>
   )

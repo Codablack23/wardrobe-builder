@@ -17,7 +17,7 @@ export default function CustomizerSideBar(){
             <LayoutFeature/>
             <DimensionFeature/>
             <MaterialFeature/>
-            {layout.type === "wardrobe"?<BaseFeature/>:null} 
+            {/* {layout.type === "wardrobe"?<BaseFeature/>:null}  */}
             {layout.type === "wardrobe"?<DoorFeature/>:null}
             {layout.type === "wardrobe"?<ShelvesFeature/>:null}
           </div>
